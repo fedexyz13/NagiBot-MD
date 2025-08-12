@@ -288,20 +288,19 @@ return true
 // Manejar eventos de mensajes
 conn.ev.on('messages.upsert', async (m) => {
     if (m.messages && m.messages[0] && m.messages[0].key && m.messages[0].key.remoteJid) {
-      const jid = m.messages[0].key.remoteJid;
-      await conn.sendPresenceUpdate('composing', jid);
-      await conn.handler(m);
-      await conn.readMessages([m.messages[0].key]);
-      await conn.sendPresenceUpdate('paused', jid);
-}
+        const jid = m.messages[0].key.remoteJid;
+        await conn.sendPresenceUpdate('composing', jid);
+        await conn.handler(m);
+        await conn.readMessages([m.messages[0].key]);
+        await conn.sendPresenceUpdate('paused', jid);
+    }
 });
 
-  conn.ev.on('connection.update', conn.connectionUpdate);
-  conn.ev.on('creds.update', conn.credsUpdate);
-
-  isInit = false;
-  return true; // ✅ ahora está dentro de la función
-        }
+conn.ev.on('connection.update', conn.connectionUpdate)
+conn.ev.on('creds.update', conn.credsUpdate)
+isInit = false
+return true
+};
 
 //Arranque nativo para subbots by - ReyEndymion >> https://github.com/ReyEndymion
 
